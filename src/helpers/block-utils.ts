@@ -1,7 +1,6 @@
 import { ObsidianUtilsBase } from "./obsidian-utils-base";
 import { App, TFile } from "obsidian";
 import { LogTo } from "src/logger";
-import { EOL } from "os";
 
 export class BlockUtils extends ObsidianUtilsBase {
   constructor(app: App) {
@@ -63,7 +62,7 @@ export class BlockUtils extends ObsidianUtilsBase {
     }
 
     oldNoteLines[lineNumber] = oldNoteLines[lineNumber] + " ^" + blockRef;
-    await this.app.vault.modify(noteFile, oldNoteLines.join(EOL));
+    await this.app.vault.modify(noteFile, oldNoteLines.join("\n"));
     return (
       this.app.metadataCache.fileToLinktext(noteFile, "", true) +
       "#^" +
