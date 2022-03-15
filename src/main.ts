@@ -282,7 +282,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "create-new-iw-queue",
       name: "Create and load a new queue.",
-      checkCallback: withMobileAvailability(false, () => new CreateQueueModal(this).open()),
+      checkCallback: withMobileAvailability(true, () => new CreateQueueModal(this).open()),
       hotkeys: [],
     });
 
@@ -292,7 +292,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "open-queue-current-pane",
       name: "Open queue in current pane.",
-      checkCallback: withMobileAvailability(false, () => this.queue.goToQueue(false)),
+      checkCallback: withMobileAvailability(true, () => this.queue.goToQueue(false)),
       hotkeys: [],
     });
 
@@ -323,7 +323,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "next-iw-repetition-schedule",
       name: "Next repetition and manually schedule.",
-      checkCallback: withMobileAvailability(false, async () => {
+      checkCallback: withMobileAvailability(true, async () => {
         const table = await this.queue.loadTable();
         if (!table || !table.hasReps()) {
           LogTo.Console("No repetitions!", true);
@@ -346,7 +346,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "edit-current-rep-data",
       name: "Edit current rep data. ",
-      checkCallback: withMobileAvailability(false, async () => {
+      checkCallback: withMobileAvailability(true, async () => {
         const table = await this.queue.loadTable();
         if (!table || !table.hasReps()) {
           LogTo.Debug("No repetitions!", true);
@@ -469,7 +469,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "fuzzy-note-add-iw-queue",
       name: "Add note to queue through a fuzzy finder",
-      checkCallback: withMobileAvailability(false, () => new FuzzyNoteAdder(this).open()),
+      checkCallback: withMobileAvailability(true, () => new FuzzyNoteAdder(this).open()),
       hotkeys: [],
     });
 
