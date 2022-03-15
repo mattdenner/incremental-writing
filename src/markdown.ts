@@ -3,7 +3,7 @@ import "./helpers/number-utils";
 import { LinkEx } from "./helpers/link-utils";
 import { Scheduler, SimpleScheduler, AFactorScheduler } from "./scheduler";
 import IW from "./main";
-import { GrayMatterFile } from "gray-matter";
+import { GrayMatterFile } from "src/helpers/markdown";
 import { LogTo } from "./logger";
 import { markdownTable } from "markdown-table";
 

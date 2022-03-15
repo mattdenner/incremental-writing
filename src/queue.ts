@@ -1,8 +1,8 @@
 import { MarkdownTable, MarkdownTableRow } from "./markdown";
 import { LogTo } from "./logger";
 import IW from "./main";
-import matter from "gray-matter";
-import { GrayMatterFile } from "gray-matter";
+import matter from "src/helpers/markdown";
+import { GrayMatterFile } from "src/helpers/markdown";
 import { NextRepScheduler } from "./views/next-rep-schedule";
 
 export class Queue {
