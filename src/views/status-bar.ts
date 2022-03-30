@@ -2,7 +2,7 @@ import { MarkdownTableRow } from "../markdown";
 import "../helpers/str-utils";
 import { normalizePath, parseLinktext } from "obsidian";
 import IW from "../main";
-import path from "src/helpers/fs-utils";
+import path from "../helpers/fs-utils";
 
 export class StatusBar {
   private statusBarAdded: boolean;

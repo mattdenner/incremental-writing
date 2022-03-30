@@ -16,7 +16,7 @@ import "../helpers/number-utils.ts";
 import "../helpers/date-utils.ts";
 import "../helpers/str-utils.ts";
 import { NaturalDateSuggest } from "./date-suggest";
-import path from "src/helpers/fs-utils";
+import path from "../helpers/fs-utils";
 
 export class BulkAdderModal extends ModalBase {
   private queuePath: string;

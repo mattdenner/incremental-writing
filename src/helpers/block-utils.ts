@@ -1,6 +1,6 @@
 import { ObsidianUtilsBase } from "./obsidian-utils-base";
 import { App, TFile } from "obsidian";
-import { LogTo } from "src/logger";
+import { LogTo } from "../logger";
 
 export class BlockUtils extends ObsidianUtilsBase {
   constructor(app: App) {

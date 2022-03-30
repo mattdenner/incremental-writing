@@ -9,7 +9,7 @@ import {
 } from "obsidian";
 import IW from "../main";
 import { FileSuggest, FolderSuggest } from "./file-suggest";
-import { LogTo } from "src/logger";
+import { LogTo } from "../logger";
 import { NaturalDateSuggest } from "./date-suggest";
 
 export class IWSettingsTab extends PluginSettingTab {
