@@ -128,7 +128,7 @@ export class Queue {
     }
 
     this.plugin.statusBar.updateCurrentRep(repToLoad);
-    LogTo.Console("Loading repetition: " + repToLoad.link, true);
+    LogTo.Console("Loading repetition: " + repToLoad.link, false);
     await this.plugin.app.workspace.openLinkText(repToLoad.link, "", false, {
       active: true,
     });
