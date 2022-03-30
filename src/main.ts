@@ -371,7 +371,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "add-links-in-selected-text",
       name: "Add links in selected text.",
-      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
+      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
         const view = this.app.workspace.getActiveViewOfType(MarkdownView);
         const editor = view?.editor;
         const file = view?.file;
@@ -491,7 +491,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "add-links-within-note",
       name: "Add links within note to queue.",
-      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
+      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
         const file = this.files.getActiveNoteFile();
         if (file !== null) {
           if (!checking) {
