@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-incremental-writing-add-from-notes",
+  "name": "Incremental Writing From Notes",
+  "description": "Add to incremental writing from notes",
+  "isDesktopOnly": false,
+  "version": "0.5.0",
+  "author": "Experimental Learning",
+  "authorUrl": "https://github.com/bjsi/incremental-writing"
+}

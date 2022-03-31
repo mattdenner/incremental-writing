@@ -1,0 +1,40 @@
+{
+  "projectType": "application",
+  "root": "packages/incremental-writing-add-from-notes-plugin",
+  "sourceRoot": "packages/incremental-writing-add-from-notes-plugin/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "project": "package.json",
+        "entryFile": "packages/incremental-writing-add-from-notes-plugin/src/main.ts",
+        "outputPath": "dist/packages/incremental-writing-add-from-notes-plugin",
+        "tsConfig": "packages/incremental-writing-add-from-notes-plugin/tsconfig.app.json",
+        "compiler": "babel",
+        "assets": [{
+          "glob": "(data|manifest).json",
+          "input": "packages/incremental-writing-add-from-notes-plugin",
+          "output": ""
+        }],
+        "format": ["cjs"],
+        "rollupConfig": ["rollup.config.js"]
+      },
+      "configurations": {
+        "production": {
+          "deleteOutputPath": true
+        }
+      }
+    },
+
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/incremental-writing-add-from-notes-plugin/**/*.ts"]
+      }
+    }
+  }
+}

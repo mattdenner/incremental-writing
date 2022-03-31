@@ -8,7 +8,6 @@ import {
   debounce,
   TAbstractFile,
   normalizePath,
-  MarkdownView,
   Platform,
 } from "obsidian";
 import { Queue } from "./queue";
@@ -16,7 +15,6 @@ import { LogTo } from "./logger";
 import {
   ReviewFileModal,
   ReviewNoteModal,
-  ReviewBlockModal,
 } from "./views/modals";
 import { IWSettings, DefaultSettings } from "./settings";
 import { IWSettingsTab } from "./views/settings-tab";
@@ -230,15 +228,19 @@ export default class IW extends Plugin {
       this.links.createAbsoluteLink(normalizePath(file.path), "")
     );
     if (pairs && pairs.length > 0) {
-      new BulkAdderModal(
-        this,
-        this.queue.queuePath,
-        "Bulk Add Search Results",
-        pairs
-      ).open();
+      this.pushLinksIntoQueue(pairs);
     } else {
       LogTo.Console("No files to add.", true);
     }
+  }
+  
+  public pushLinksIntoQueue(links: string[]) {
+    new BulkAdderModal(
+      this,
+      this.queue.queuePath,
+      "Add to queue",
+      links,
+    ).open();
   }
 
   async updateStatusBar() {
@@ -369,90 +371,6 @@ export default class IW extends Plugin {
     // Element Adding.
 
     this.addCommand({
-      id: "add-links-in-selected-text",
-      name: "Add links in selected text.",
-      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
-        const view = this.app.workspace.getActiveViewOfType(MarkdownView);
-        const editor = view?.editor;
-        const file = view?.file;
-
-        if (file && editor) {
-          if (!checking) {
-            const links = this.app.metadataCache.getFileCache(file).links ?? [];
-            if (!links || links.length === 0) {
-              LogTo.Debug("Active note does not contain any links.", true);
-              return;
-            }
-
-            const selection = editor.getSelection();
-            if (!selection || selection.length === 0) {
-              LogTo.Debug("No selected text.", true);
-              return;
-            }
-
-            const selectedLinks = Array.from(
-              links
-                .filter((link) => selection.contains(link.original))
-                .map((link) =>
-                  this.links.createAbsoluteLink(link.link, file.path)
-                )
-                .filter((link) => link !== null && link.length > 0)
-                .reduce((set, link) => set.add(link), new Set<string>())
-            );
-
-            if (!selectedLinks || selectedLinks.length === 0) {
-              LogTo.Debug("No selected links.", true);
-              return;
-            }
-
-            LogTo.Debug("Selected links: " + selectedLinks.toString());
-            new BulkAdderModal(
-              this,
-              this.queue.queuePath,
-              "Bulk Add Links",
-              selectedLinks
-            ).open();
-          }
-          return true;
-        }
-        return false;
-      }),
-    });
-
-    this.addCommand({
-      id: "bulk-add-blocks",
-      name: "Bulk add blocks with references to queue.",
-      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
-        const file = this.files.getActiveNoteFile();
-        if (file != null) {
-          if (!checking) {
-            const refs = this.app.metadataCache.getFileCache(file).blocks;
-            if (!refs) {
-              LogTo.Debug("File does not contain any blocks with references.");
-            } else {
-              const fileLink = this.app.metadataCache.fileToLinktext(
-                file,
-                "",
-                true
-              );
-              const linkPaths = Object.keys(refs).map(
-                (l) => fileLink + "#^" + l
-              );
-              new BulkAdderModal(
-                this,
-                this.queue.queuePath,
-                "Bulk Add Block References",
-                linkPaths
-              ).open();
-            }
-          }
-          return true;
-        }
-        return false;
-      }),
-    });
-
-    this.addCommand({
       id: "note-add-iw-queue",
       name: "Add note to queue.",
       checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
@@ -470,47 +388,6 @@ export default class IW extends Plugin {
       id: "fuzzy-note-add-iw-queue",
       name: "Add note to queue through a fuzzy finder",
       checkCallback: withMobileAvailability(true, () => new FuzzyNoteAdder(this).open()),
-      hotkeys: [],
-    });
-
-    this.addCommand({
-      id: "block-add-iw-queue",
-      name: "Add block to queue.",
-      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
-        if (this.files.getActiveNoteFile() != null) {
-          if (!checking) {
-            new ReviewBlockModal(this).open();
-          }
-          return true;
-        }
-        return false;
-      }),
-      hotkeys: [],
-    });
-
-    this.addCommand({
-      id: "add-links-within-note",
-      name: "Add links within note to queue.",
-      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
-        const file = this.files.getActiveNoteFile();
-        if (file !== null) {
-          if (!checking) {
-            const links = this.links.getLinksIn(file);
-            if (links && links.length > 0) {
-              new BulkAdderModal(
-                this,
-                this.queue.queuePath,
-                "Bulk Add Links",
-                links
-              ).open();
-            } else {
-              LogTo.Console("No links in the current file.", true);
-            }
-          }
-          return true;
-        }
-        return false;
-      }),
       hotkeys: [],
     });
 
