@@ -1,0 +1,40 @@
+{
+  "projectType": "application",
+  "root": "packages/incremental-writing-plugin",
+  "sourceRoot": "packages/incremental-writing-plugin/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nrwl/web:rollup",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "project": "package.json",
+        "entryFile": "packages/incremental-writing-plugin/src/main.ts",
+        "outputPath": "dist/packages/incremental-writing-plugin",
+        "tsConfig": "packages/incremental-writing-plugin/tsconfig.app.json",
+        "compiler": "babel",
+        "assets": [{
+          "glob": "(data|manifest).json",
+          "input": "packages/incremental-writing-plugin",
+          "output": ""
+        }],
+        "format": ["cjs"],
+        "rollupConfig": ["rollup.config.js"]
+      },
+      "configurations": {
+        "production": {
+          "deleteOutputPath": true
+        }
+      }
+    },
+
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/incremental-writing-plugin/**/*.ts"]
+      }
+    }
+  }
+}
