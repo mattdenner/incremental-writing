@@ -1,7 +1,6 @@
 import { App, TFile } from "obsidian";
 import { ObsidianUtilsBase } from "./obsidian-utils-base";
 import { getLinkpath, parseLinktext } from "obsidian";
-import { LogTo } from "../logger";
 
 export class LinkEx extends ObsidianUtilsBase {
   constructor(app: App) {

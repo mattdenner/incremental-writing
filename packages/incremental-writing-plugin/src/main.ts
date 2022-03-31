@@ -201,7 +201,7 @@ export default class IW extends Plugin {
       LogTo.Console("Failed to get search leaf view.");
       return [];
     }
-    // @ts-ignore
+    // @ts-ignore: the `dom` attribute of the view is "secret"
     return Array.from(view.dom.resultDomLookup.keys());
   }
 
@@ -264,7 +264,7 @@ export default class IW extends Plugin {
     // Only show certain commands on a mobile device!
     const withMobileCheckCallback = (isSupportedOnMobile: boolean, callback: (checking: boolean) => any) => {
       if (Platform.isMobile && !isSupportedOnMobile) {
-        return (checking: boolean) => false;
+        return (_checking: boolean) => false;
       }
       return callback;
     }

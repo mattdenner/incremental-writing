@@ -33,7 +33,7 @@ Date.prototype.isValid = function () {
 Date.prototype.daysDifference = function (from: Date): number {
   const date = new Date(this);
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-  // @ts-ignore
+  // @ts-ignore: there's something odd about the `date-from` behaviour
   return Math.round(Math.abs((date - from) / oneDay));
 };
 

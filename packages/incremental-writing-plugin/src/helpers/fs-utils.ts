@@ -1,9 +1,9 @@
 import { Platform } from "obsidian";
-import * as nativePath from "path";
+//import * as nativePath from "path";
 
 const path: {
   relative: (a: string, b:string) => string,
-} = (function(hasProperFilesystemSupport: boolean) {
+} = (function(_hasProperFilesystemSupport: boolean) {
   /*
   if (hasProperFilesystemSupport) {
     return {

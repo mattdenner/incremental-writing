@@ -1,10 +1,3 @@
-//import matter from "gray-matter";
-//import { GrayMatterFile } from "gray-matter";
-import { Platform } from "obsidian";
-
-import desktopMatter from "gray-matter";
-export { GrayMatterFile } from "gray-matter";
-
 import YAML from 'yaml';
 import { GrayMatterFile } from "gray-matter";
 
@@ -16,7 +9,7 @@ export default function matter(input: string): GrayMatterFile<string> {
     language: "yaml",
     matter: "",
     orig: input,
-    stringify: (s: string) => '',
+    stringify: (_s: string) => '',
   };
   
   const open = "---";
@@ -37,7 +30,7 @@ export default function matter(input: string): GrayMatterFile<string> {
     enumerable: false,
     configurable: true,
     writable: true,
-    value: (data: any, options: any): string => {
+    value: (_data: any, _options: any): string => {
       const matter = YAML.stringify(file.data);
       return [open, matter, close, file.content].join("\n");
     },

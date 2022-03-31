@@ -2,7 +2,6 @@ import {
   SliderComponent,
   TextComponent,
   ButtonComponent,
-  DropdownComponent,
 } from "obsidian";
 import IW from "../main";
 import { ModalBase } from "./modal-base";
