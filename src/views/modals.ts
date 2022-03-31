@@ -16,7 +16,7 @@ import { MarkdownTableRow } from "../markdown";
 import "../helpers/date-utils";
 import "../helpers/number-utils";
 import { NaturalDateSuggest } from "./date-suggest";
-import path from "path";
+import path from "../helpers/fs-utils";
 
 abstract class ReviewModal extends ModalBase {
   protected title: string;

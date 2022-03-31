@@ -1,4 +1,4 @@
-import IW from "src/main";
+import IW from "../main";
 import { TextInputSuggest } from "./suggest";
 
 export class NaturalDateSuggest extends TextInputSuggest<string> {

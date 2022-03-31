@@ -10,7 +10,7 @@ import { ModalBase } from "./modal-base";
 import { LogTo } from "../logger";
 import "../helpers/date-utils";
 import "../helpers/str-utils";
-import { AFactorScheduler, Scheduler, SimpleScheduler } from "src/scheduler";
+import { AFactorScheduler, Scheduler, SimpleScheduler } from "../scheduler";
 
 export class CreateQueueModal extends ModalBase {
   private queueNameText: TextComponent;

@@ -1,8 +1,7 @@
 import { MarkdownTable, MarkdownTableRow } from "./markdown";
 import { LogTo } from "./logger";
 import IW from "./main";
-import matter from "gray-matter";
-import { GrayMatterFile } from "gray-matter";
+import matter, { GrayMatterFile } from "./helpers/markdown";
 import { NextRepScheduler } from "./views/next-rep-schedule";
 
 export class Queue {
@@ -128,7 +127,7 @@ export class Queue {
     }
 
     this.plugin.statusBar.updateCurrentRep(repToLoad);
-    LogTo.Console("Loading repetition: " + repToLoad.link, true);
+    LogTo.Console("Loading repetition: " + repToLoad.link, false);
     await this.plugin.app.workspace.openLinkText(repToLoad.link, "", false, {
       active: true,
     });

@@ -1,8 +1,8 @@
 import { App, TAbstractFile, TFile, TFolder } from "obsidian";
 import { TextInputSuggest } from "./suggest";
 import IW from "../main";
-import path from "path";
-import { LogTo } from "src/logger";
+import path from "../helpers/fs-utils";
+import { LogTo } from "../logger";
 
 export class FileSuggest extends TextInputSuggest<TFile> {
   folder: () => TFolder;

@@ -1,10 +1,9 @@
 import "./helpers/date-utils";
-import { EOL } from "os";
 import "./helpers/number-utils";
 import { LinkEx } from "./helpers/link-utils";
 import { Scheduler, SimpleScheduler, AFactorScheduler } from "./scheduler";
 import IW from "./main";
-import { GrayMatterFile } from "gray-matter";
+import { GrayMatterFile } from "./helpers/markdown";
 import { LogTo } from "./logger";
 import { markdownTable } from "markdown-table";
 
@@ -175,7 +174,7 @@ export class MarkdownTable {
     if (rows && rows.length > 0) {
       const align = { align: ["l", "r", "l", "r", "r"] };
       return [yaml, markdownTable([this.header, ...rows], align)]
-        .join(EOL)
+        .join("\n")
         .trim();
     } else {
       return yaml.trim();

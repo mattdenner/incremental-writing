@@ -9,6 +9,7 @@ import {
   TAbstractFile,
   normalizePath,
   MarkdownView,
+  Platform,
 } from "obsidian";
 import { Queue } from "./queue";
 import { LogTo } from "./logger";
@@ -259,11 +260,29 @@ export default class IW extends Plugin {
   registerCommands() {
     //
     // Queue Creation
+    
+    // Only show certain commands on a mobile device!
+    const withMobileCheckCallback = (isSupportedOnMobile: boolean, callback: (checking: boolean) => any) => {
+      if (Platform.isMobile && !isSupportedOnMobile) {
+        return (checking: boolean) => false;
+      }
+      return callback;
+    }
+    
+    const callbackToCheckcallback = (callback: () => any) => (checking: boolean) => {
+      if (checking) return true;
+      callback();
+      return true;
+    };
+    
+    const withMobileAvailability = 
+      (isSupportedOnMobile: boolean, callback: () => any) =>
+        withMobileCheckCallback(isSupportedOnMobile, callbackToCheckcallback(callback));
 
     this.addCommand({
       id: "create-new-iw-queue",
       name: "Create and load a new queue.",
-      callback: () => new CreateQueueModal(this).open(),
+      checkCallback: withMobileAvailability(true, () => new CreateQueueModal(this).open()),
       hotkeys: [],
     });
 
@@ -273,14 +292,14 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "open-queue-current-pane",
       name: "Open queue in current pane.",
-      callback: () => this.queue.goToQueue(false),
+      checkCallback: withMobileAvailability(true, () => this.queue.goToQueue(false)),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "open-queue-new-pane",
       name: "Open queue in new pane.",
-      callback: () => this.queue.goToQueue(true),
+      checkCallback: withMobileAvailability(false, () => this.queue.goToQueue(true)),
       hotkeys: [],
     });
 
@@ -290,23 +309,21 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "current-iw-repetition",
       name: "Current repetition.",
-      callback: async () => await this.queue.goToCurrentRep(),
+      checkCallback: withMobileAvailability(true, async () => await this.queue.goToCurrentRep()),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "dismiss-current-repetition",
       name: "Dismiss current repetition.",
-      callback: async () => {
-        await this.queue.dismissCurrent();
-      },
+      checkCallback: withMobileAvailability(true, async () => await this.queue.dismissCurrent()),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "next-iw-repetition-schedule",
       name: "Next repetition and manually schedule.",
-      callback: async () => {
+      checkCallback: withMobileAvailability(true, async () => {
         const table = await this.queue.loadTable();
         if (!table || !table.hasReps()) {
           LogTo.Console("No repetitions!", true);
@@ -316,20 +333,20 @@ export default class IW extends Plugin {
         if (await this.queue.nextRepetition()) {
           new NextRepScheduler(this, currentRep, table).open();
         }
-      },
+      }),
     });
 
     this.addCommand({
       id: "next-iw-repetition",
       name: "Next repetition.",
-      callback: async () => await this.queue.nextRepetition(),
+      checkCallback: withMobileAvailability(true, async () => await this.queue.nextRepetition()),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "edit-current-rep-data",
       name: "Edit current rep data. ",
-      callback: async () => {
+      checkCallback: withMobileAvailability(true, async () => {
         const table = await this.queue.loadTable();
         if (!table || !table.hasReps()) {
           LogTo.Debug("No repetitions!", true);
@@ -344,7 +361,7 @@ export default class IW extends Plugin {
 
         new EditDataModal(this, curRep, table).open();
         await this.updateStatusBar();
-      },
+      }),
       hotkeys: [],
     });
 
@@ -354,7 +371,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "add-links-in-selected-text",
       name: "Add links in selected text.",
-      checkCallback: (checking) => {
+      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
         const view = this.app.workspace.getActiveViewOfType(MarkdownView);
         const editor = view?.editor;
         const file = view?.file;
@@ -399,13 +416,13 @@ export default class IW extends Plugin {
           return true;
         }
         return false;
-      },
+      }),
     });
 
     this.addCommand({
       id: "bulk-add-blocks",
       name: "Bulk add blocks with references to queue.",
-      checkCallback: (checking) => {
+      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
         const file = this.files.getActiveNoteFile();
         if (file != null) {
           if (!checking) {
@@ -432,13 +449,13 @@ export default class IW extends Plugin {
           return true;
         }
         return false;
-      },
+      }),
     });
 
     this.addCommand({
       id: "note-add-iw-queue",
       name: "Add note to queue.",
-      checkCallback: (checking: boolean) => {
+      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
         if (this.files.getActiveNoteFile() !== null) {
           if (!checking) {
             new ReviewNoteModal(this).open();
@@ -446,20 +463,20 @@ export default class IW extends Plugin {
           return true;
         }
         return false;
-      },
+      }),
     });
 
     this.addCommand({
       id: "fuzzy-note-add-iw-queue",
       name: "Add note to queue through a fuzzy finder",
-      callback: () => new FuzzyNoteAdder(this).open(),
+      checkCallback: withMobileAvailability(true, () => new FuzzyNoteAdder(this).open()),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "block-add-iw-queue",
       name: "Add block to queue.",
-      checkCallback: (checking: boolean) => {
+      checkCallback: withMobileCheckCallback(false, (checking: boolean) => {
         if (this.files.getActiveNoteFile() != null) {
           if (!checking) {
             new ReviewBlockModal(this).open();
@@ -467,14 +484,14 @@ export default class IW extends Plugin {
           return true;
         }
         return false;
-      },
+      }),
       hotkeys: [],
     });
 
     this.addCommand({
       id: "add-links-within-note",
       name: "Add links within note to queue.",
-      checkCallback: (checking: boolean) => {
+      checkCallback: withMobileCheckCallback(true, (checking: boolean) => {
         const file = this.files.getActiveNoteFile();
         if (file !== null) {
           if (!checking) {
@@ -493,7 +510,7 @@ export default class IW extends Plugin {
           return true;
         }
         return false;
-      },
+      }),
       hotkeys: [],
     });
 
@@ -503,9 +520,7 @@ export default class IW extends Plugin {
     this.addCommand({
       id: "load-iw-queue",
       name: "Load a queue.",
-      callback: () => {
-        new QueueLoadModal(this).open();
-      },
+      checkCallback: withMobileAvailability(true, () => new QueueLoadModal(this).open()),
       hotkeys: [],
     });
   }

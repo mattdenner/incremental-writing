@@ -1,7 +1,7 @@
 import { normalizePath, FuzzySuggestModal } from "obsidian";
-import * as path from "path";
-import { LogTo } from "src/logger";
+import { LogTo } from "../logger";
 import IW from "../main";
+import path from "../helpers/fs-utils";
 
 export class QueueLoadModal extends FuzzySuggestModal<string> {
   plugin: IW;
