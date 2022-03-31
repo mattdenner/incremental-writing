@@ -14,12 +14,17 @@
         "outputPath": "dist/packages/incremental-writing-plugin",
         "tsConfig": "packages/incremental-writing-plugin/tsconfig.app.json",
         "compiler": "babel",
-        "assets": [],
+        "assets": [{
+          "glob": "(data|manifest).json",
+          "input": "packages/incremental-writing-plugin",
+          "output": ""
+        }],
         "format": ["cjs"],
         "rollupConfig": ["rollup.config.js"]
       },
       "configurations": {
         "production": {
+          "deleteOutputPath": true
         }
       }
     },
