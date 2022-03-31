@@ -9,13 +9,12 @@
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "project": "packages/incremental-writing-plugin/package.json",
+        "project": "package.json",
         "entryFile": "packages/incremental-writing-plugin/src/main.ts",
         "outputPath": "dist/packages/incremental-writing-plugin",
         "tsConfig": "packages/incremental-writing-plugin/tsconfig.app.json",
         "compiler": "babel",
         "assets": [],
-        "external": ["obsidian"],
         "format": ["cjs"],
         "rollupConfig": ["rollup.config.js"]
       },
