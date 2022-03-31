@@ -2,6 +2,7 @@
   "version": 2,
   "projects": {
     "incremental-writing-plugin": "packages/incremental-writing-plugin",
-    "incremental-writing-add-from-notes-plugin": "packages/incremental-writing-add-from-notes-plugin"
+    "incremental-writing-add-from-notes-plugin": "packages/incremental-writing-add-from-notes-plugin",
+    "incremental-writing-add-from-search-plugin": "packages/incremental-writing-add-from-search-plugin"
   }
 }

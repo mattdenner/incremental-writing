@@ -1,0 +1,9 @@
+{
+  "id": "obsidian-incremental-writing-add-from-search",
+  "name": "Incremental Writing From Search",
+  "description": "Add to incremental writing from search",
+  "isDesktopOnly": false,
+  "version": "0.5.0",
+  "author": "Experimental Learning",
+  "authorUrl": "https://github.com/bjsi/incremental-writing"
+}
