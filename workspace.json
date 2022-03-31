@@ -1,7 +1,6 @@
 {
   "version": 2,
   "projects": {
-    "incremental-writing-plugin": "packages/incremental-writing-plugin",
-    "incremental-writing-plugin-e2e": "packages/incremental-writing-plugin-e2e"
+    "incremental-writing-plugin": "packages/incremental-writing-plugin"
   }
 }
