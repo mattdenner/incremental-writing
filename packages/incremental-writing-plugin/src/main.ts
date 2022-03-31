@@ -3,7 +3,6 @@ import {
   TFolder,
   Plugin,
   TFile,
-  ButtonComponent,
   getAllTags,
   debounce,
   TAbstractFile,
@@ -188,51 +187,6 @@ export default class IW extends Plugin {
       }
     }
   }
-
-  async getSearchLeafView() {
-    return this.app.workspace.getLeavesOfType("search")[0]?.view;
-  }
-
-  async getFound() {
-    const view = await this.getSearchLeafView();
-    if (!view) {
-      LogTo.Console("Failed to get search leaf view.");
-      return [];
-    }
-    // @ts-ignore: the `dom` attribute of the view is "secret"
-    return Array.from(view.dom.resultDomLookup.keys());
-  }
-
-  async addSearchButton() {
-    const view = await this.getSearchLeafView();
-    if (!view) {
-      LogTo.Console("Failed to add button to the search pane.");
-      return;
-    }
-    (<any>view).addToQueueButton = new ButtonComponent(
-      view.containerEl.children[0].firstChild as HTMLElement
-    )
-      .setClass("nav-action-button")
-      .setIcon("sheets-in-box")
-      .setTooltip("Add to IW Queue")
-      .onClick(async () => await this.addSearchResultsToQueue());
-  }
-
-  async getSearchResults(): Promise<TFile[]> {
-    return (await this.getFound()) as TFile[];
-  }
-
-  async addSearchResultsToQueue() {
-    const files = await this.getSearchResults();
-    const pairs = files.map((file) =>
-      this.links.createAbsoluteLink(normalizePath(file.path), "")
-    );
-    if (pairs && pairs.length > 0) {
-      this.pushLinksIntoQueue(pairs);
-    } else {
-      LogTo.Console("No files to add.", true);
-    }
-  }
   
   public pushLinksIntoQueue(links: string[]) {
     new BulkAdderModal(
@@ -414,7 +368,6 @@ export default class IW extends Plugin {
       await this.loadQueue(queuePath);
       this.createTagMap();
       this.checkTagsOnModified();
-      this.addSearchButton();
       this.autoAddNewNotesOnCreate();
     });
 
@@ -463,15 +416,6 @@ export default class IW extends Plugin {
     );
   }
 
-  async removeSearchButton() {
-    const searchView = await this.getSearchLeafView();
-    let btn = (<any>searchView)?.addToQueueButton;
-    if (btn) {
-      btn.buttonEl?.remove();
-      btn = null;
-    }
-  }
-
   unsubscribeFromEvents() {
     for (let e of [
       this.autoAddNewNotesOnCreateEvent,
@@ -484,7 +428,6 @@ export default class IW extends Plugin {
 
   async onunload() {
     LogTo.Console("Disabled and unloaded.");
-    await this.removeSearchButton();
     this.unsubscribeFromEvents();
   }
 }
