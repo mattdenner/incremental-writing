@@ -65,8 +65,7 @@ export class IWSettingsTab extends PluginSettingTab {
         );
         text.setPlaceholder("Example: queue.md");
         text.setValue(String(settings.queueFileName)).onChange((value) => {
-          let str = String(value);
-          if (!str) return;
+          if (!String(value)) return;
           let file = normalizePath(String(value));
           if (!file.endsWith(".md")) file += ".md";
           settings.queueFileName = file;
@@ -253,8 +252,8 @@ export class IWSettingsTab extends PluginSettingTab {
                 .filter((s) => !isEmpty(s)),
             ]);
 
-          let queueTagMap: Record<string, string[]> = {};
-          for (let [queue, tags] of split) {
+          const queueTagMap: Record<string, string[]> = {};
+          for (const [queue, tags] of split) {
             if (!isEmpty(queue) && !isEmpty(tags)) queueTagMap[queue] = tags;
           }
 
@@ -292,7 +291,7 @@ export class IWSettingsTab extends PluginSettingTab {
         comp.setDynamicTooltip();
         comp.setValue(Number(settings.defaultPriorityMin)).onChange((value) => {
           if (this.inputPriorityMax) {
-            let num = Number(value);
+            const num = Number(value);
             if (!num.isValidPriority()) {
               return;
             }
@@ -317,7 +316,7 @@ export class IWSettingsTab extends PluginSettingTab {
         comp.setDynamicTooltip();
         comp.setValue(Number(settings.defaultPriorityMax)).onChange((value) => {
           if (this.inputPriorityMin) {
-            let num = Number(value);
+            const num = Number(value);
             if (!num.isValidPriority()) {
               return;
             }

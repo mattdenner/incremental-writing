@@ -12,7 +12,7 @@ export class MarkdownTable {
   scheduler: Scheduler;
   private header = ["Link", "Priority", "Notes", "Interval", "Next Rep"];
   rows: MarkdownTableRow[] = [];
-  removedDeleted: boolean = false;
+  removedDeleted = false;
 
   // TODO: just pass the gray matter object, replace text with contents.
   constructor(plugin: IW, frontMatter?: GrayMatterFile<string>, text?: string) {
@@ -20,8 +20,8 @@ export class MarkdownTable {
     this.scheduler = this.createScheduler(frontMatter);
     if (text) {
       text = text.trim();
-      let split = text.split(/\r?\n/);
-      let idx = this.findYamlEnd(split);
+      const split = text.split(/\r?\n/);
+      const idx = this.findYamlEnd(split);
       if (idx !== -1)
         // line after yaml + header
         this.rows = this.parseRows(split.slice(idx + 1 + 2));
@@ -29,11 +29,11 @@ export class MarkdownTable {
   }
 
   removeDeleted() {
-    let queuePath = this.plugin.queue.queuePath;
-    let exists = this.rows.filter((r) =>
+    const queuePath = this.plugin.queue.queuePath;
+    const exists = this.rows.filter((r) =>
       this.plugin.links.exists(r.link, queuePath)
     );
-    let removedNum = this.rows.length - exists.length;
+    const removedNum = this.rows.length - exists.length;
     this.rows = exists;
     if (removedNum > 0) {
       this.removedDeleted = true;
@@ -52,7 +52,7 @@ export class MarkdownTable {
 
   findYamlEnd(split: string[]) {
     let ct = 0;
-    let idx = split.findIndex((value) => {
+    const idx = split.findIndex((value) => {
       if (value === "---") {
         if (ct === 1) {
           return true;
@@ -77,12 +77,12 @@ export class MarkdownTable {
 
     // Specified in YAML
     if (frontMatter) {
-      let schedulerName = frontMatter.data["scheduler"];
+      const schedulerName = frontMatter.data["scheduler"];
       if (schedulerName && schedulerName === "simple") {
         scheduler = new SimpleScheduler();
       } else if (schedulerName && schedulerName === "afactor") {
-        let afactor = Number(frontMatter.data["afactor"]);
-        let interval = Number(frontMatter.data["interval"]);
+        const afactor = Number(frontMatter.data["afactor"]);
+        const interval = Number(frontMatter.data["interval"]);
         scheduler = new AFactorScheduler(afactor, interval);
       }
     }
@@ -94,7 +94,7 @@ export class MarkdownTable {
   }
 
   parseRow(text: string): MarkdownTableRow {
-    let arr = text
+    const arr = text
       .substr(1, text.length - 1)
       .split("|")
       .map((r) => r.trim());
@@ -152,8 +152,8 @@ export class MarkdownTable {
 
   private sortByPriority() {
     this.rows.sort((a, b) => {
-      let fst = +a.priority;
-      let snd = +b.priority;
+      const fst = +a.priority;
+      const snd = +b.priority;
       if (fst > snd) return 1;
       else if (fst == snd) return 0;
       else if (fst < snd) return -1;
@@ -197,7 +197,7 @@ export class MarkdownTableRow {
     link: string,
     priority: number,
     notes: string,
-    interval: number = 1,
+    interval = 1,
     nextRepDate: Date = new Date("1970-01-01")
   ) {
     this.link = LinkEx.removeBrackets(link);

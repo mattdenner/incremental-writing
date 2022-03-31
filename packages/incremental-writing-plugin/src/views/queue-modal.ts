@@ -25,7 +25,7 @@ export class QueueLoadModal extends FuzzySuggestModal<string> {
     );
     const folder = this.plugin.files.getTFolder(queueFolderPath);
     if (folder) {
-      let files = this.plugin.app.vault
+      const files = this.plugin.app.vault
         .getMarkdownFiles()
         .filter((file) => this.plugin.files.isDescendantOf(file, folder))
         .map((file) => path.relative(queueFolderPath, file.path));

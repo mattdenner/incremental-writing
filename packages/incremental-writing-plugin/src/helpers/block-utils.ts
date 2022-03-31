@@ -73,9 +73,9 @@ export class BlockUtils extends ObsidianUtilsBase {
   createBlockHash(): string {
     // Credit to https://stackoverflow.com/a/1349426
     let result = "";
-    var characters = "abcdefghijklmnopqrstuvwxyz0123456789";
-    var charactersLength = characters.length;
-    for (var i = 0; i < 7; i++) {
+    const characters = "abcdefghijklmnopqrstuvwxyz0123456789";
+    const charactersLength = characters.length;
+    for (let i = 0; i < 7; i++) {
       result += characters.charAt(Math.floor(Math.random() * charactersLength));
     }
     return result;

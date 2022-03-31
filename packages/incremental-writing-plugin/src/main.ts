@@ -112,7 +112,7 @@ export default class IW extends Plugin {
           const currentTags = new Set(getAllTags(fileCachedData) || []);
           const lastTags = this.tagMap.get(file) || new Set<string>();
 
-          let setsEqual = (a: Set<string>, b: Set<string>) =>
+          const setsEqual = (a: Set<string>, b: Set<string>) =>
             a.size === b.size && [...a].every((value) => b.has(value));
           if (setsEqual(new Set(currentTags), new Set(lastTags))) {
             LogTo.Debug("No tag changes.");
@@ -174,11 +174,11 @@ export default class IW extends Plugin {
           if (!(file instanceof TFile) || file.extension !== "md") {
             return;
           }
-          let link = this.files.toLinkText(file);
-          let min = this.settings.defaultPriorityMin;
-          let max = this.settings.defaultPriorityMax;
-          let priority = this.randomWithinInterval(min, max);
-          let row = new MarkdownTableRow(link, priority, "");
+          const link = this.files.toLinkText(file);
+          const min = this.settings.defaultPriorityMin;
+          const max = this.settings.defaultPriorityMax;
+          const priority = this.randomWithinInterval(min, max);
+          const row = new MarkdownTableRow(link, priority, "");
           LogTo.Console("Auto adding new note to default queue: " + link);
           await this.queue.add(row);
         }
@@ -587,7 +587,7 @@ export default class IW extends Plugin {
   }
 
   async removeSearchButton() {
-    let searchView = await this.getSearchLeafView();
+    const searchView = await this.getSearchLeafView();
     let btn = (<any>searchView)?.addToQueueButton;
     if (btn) {
       btn.buttonEl?.remove();

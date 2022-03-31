@@ -27,7 +27,7 @@ export class EditDataModal extends ModalBase {
   }
 
   async onOpen() {
-    let { contentEl } = this;
+    const { contentEl } = this;
 
     contentEl.createEl("h2", { text: "Edit Rep Data" });
     contentEl.createEl("p", { text: "Current Rep: " + this.currentRep.link });
@@ -125,11 +125,11 @@ export class EditDataModal extends ModalBase {
   subscribeToEvents() {
     this.contentEl.addEventListener("keydown", async (ev) => {
       if (ev.key === "PageUp") {
-        let curValue = this.inputSlider.getValue();
+        const curValue = this.inputSlider.getValue();
         if (curValue < 95) this.inputSlider.setValue(curValue + 5);
         else this.inputSlider.setValue(100);
       } else if (ev.key === "PageDown") {
-        let curValue = this.inputSlider.getValue();
+        const curValue = this.inputSlider.getValue();
         if (curValue > 5) this.inputSlider.setValue(curValue - 5);
         else this.inputSlider.setValue(0);
       } else if (ev.key === "Enter") {

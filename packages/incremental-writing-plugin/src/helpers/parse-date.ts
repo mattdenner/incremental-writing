@@ -24,10 +24,10 @@ export class DateParser extends ObsidianUtilsBase {
   }
 
   parseDate(dateString: string): Date {
-    let d1 = this.parseDateAsDate(dateString);
+    const d1 = this.parseDateAsDate(dateString);
     if (d1.isValid()) return d1;
 
-    let d2 = this.parseDateAsNatural(dateString);
+    const d2 = this.parseDateAsNatural(dateString);
     if (d2.isValid()) return d2;
 
     return new Date("1970-01-01");

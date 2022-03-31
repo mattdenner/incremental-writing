@@ -30,8 +30,8 @@ export class LinkEx extends ObsidianUtilsBase {
 
   // TODO:
   exists(link: string, source: string): boolean {
-    let path = getLinkpath(link);
-    let file = this.app.metadataCache.getFirstLinkpathDest(path, source);
+    const path = getLinkpath(link);
+    const file = this.app.metadataCache.getFirstLinkpathDest(path, source);
     return file instanceof TFile;
   }
 

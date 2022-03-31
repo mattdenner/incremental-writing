@@ -19,9 +19,9 @@ export class SimpleScheduler extends Scheduler {
   schedule(table: MarkdownTable, row: MarkdownTableRow) {
     table.addRow(row);
     // spread rows between 0 and 100 priority
-    let step = 99.9 / table.rows.length;
+    const step = 99.9 / table.rows.length;
     let curPri = step;
-    for (let row of table.rows) {
+    for (const row of table.rows) {
       row.priority = curPri.round(2);
       curPri += step;
     }
@@ -38,7 +38,7 @@ export class AFactorScheduler extends Scheduler {
   private afactor: number;
   private interval: number;
 
-  constructor(afactor: number = 2, interval: number = 1) {
+  constructor(afactor = 2, interval = 1) {
     super("afactor");
     this.afactor = afactor.isValidAFactor() ? afactor : 2;
     this.interval = interval.isValidInterval() ? interval : 1;

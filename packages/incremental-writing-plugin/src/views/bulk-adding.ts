@@ -81,7 +81,7 @@ export class BulkAdderModal extends ModalBase {
   }
 
   async onOpen() {
-    let { contentEl } = this;
+    const { contentEl } = this;
 
     contentEl.createEl("h3", { text: this.title });
 
@@ -105,7 +105,7 @@ export class BulkAdderModal extends ModalBase {
           true
         )
       );
-    let folderFunc = () =>
+    const folderFunc = () =>
       this.plugin.app.vault.getAbstractFileByPath(
         this.plugin.settings.queueFolderPath
       ) as TFolder;
@@ -129,7 +129,7 @@ export class BulkAdderModal extends ModalBase {
       .setDynamicTooltip()
       .onChange((value) => {
         if (this.maxPriorityComponent) {
-          let max = this.maxPriorityComponent.getValue();
+          const max = this.maxPriorityComponent.getValue();
           if (value > max) this.maxPriorityComponent.setValue(value);
         }
       })
@@ -144,7 +144,7 @@ export class BulkAdderModal extends ModalBase {
       .setDynamicTooltip()
       .onChange((value) => {
         if (this.minPriorityComponent) {
-          let min = this.minPriorityComponent.getValue();
+          const min = this.minPriorityComponent.getValue();
           if (value < min) this.minPriorityComponent.setValue(value);
         }
       })
@@ -224,19 +224,19 @@ export class BulkAdderModal extends ModalBase {
       return;
     }
 
-    let priStep = (priMax - priMin) / this.toAdd.length;
+    const priStep = (priMax - priMin) / this.toAdd.length;
     let curPriority = priMin;
     let curDate = dateMin;
-    let dateDiff = dateMin.daysDifference(dateMax);
-    let numToAdd = this.toAdd.length > 0 ? this.toAdd.length : 1;
-    let dateStep = dateDiff / numToAdd;
+    const dateDiff = dateMin.daysDifference(dateMax);
+    const numToAdd = this.toAdd.length > 0 ? this.toAdd.length : 1;
+    const dateStep = dateDiff / numToAdd;
     let curStep = dateStep;
 
     const queuePath = this.getQueuePath();
     const queue = new Queue(this.plugin, queuePath);
     const rows: MarkdownTableRow[] = [];
     LogTo.Console("To add: " + this.toAdd);
-    for (let link of this.toAdd) {
+    for (const link of this.toAdd) {
       rows.push(new MarkdownTableRow(link, curPriority, "", 1, curDate));
       curPriority = (curPriority + priStep).round(2);
       curDate = new Date(dateMin).addDays(curStep);
