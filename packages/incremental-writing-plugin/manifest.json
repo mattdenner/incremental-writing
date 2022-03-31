@@ -5,6 +5,5 @@
   "isDesktopOnly": false,
   "version": "0.5.0",
   "author": "Experimental Learning",
-  "authorUrl": "https://github.com/bjsi/incremental-writing",
-  "js": "main.cjs.js"
+  "authorUrl": "https://github.com/bjsi/incremental-writing"
 }
