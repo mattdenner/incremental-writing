@@ -10,7 +10,7 @@ export class FuzzyNoteAdder extends FuzzySuggestModal<string> {
     this.plugin = plugin;
   }
 
-  onChooseItem(item: string, evt: MouseEvent | KeyboardEvent) {
+  onChooseItem(item: string, _evt: MouseEvent | KeyboardEvent) {
     new ReviewFileModal(this.plugin, item).open();
   }
 

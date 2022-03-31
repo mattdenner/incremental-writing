@@ -24,7 +24,7 @@ export class StatusBar {
       return;
     }
 
-    let status = this.statusBar.createEl("div", { prepend: true });
+    const status = this.statusBar.createEl("div", { prepend: true });
     this.repText = status.createEl("span", {
       cls: ["status-bar-item-segment"],
     });

@@ -1,7 +1,6 @@
 import { App, TFile } from "obsidian";
 import { ObsidianUtilsBase } from "./obsidian-utils-base";
 import { getLinkpath, parseLinktext } from "obsidian";
-import { LogTo } from "../logger";
 
 export class LinkEx extends ObsidianUtilsBase {
   constructor(app: App) {
@@ -30,8 +29,8 @@ export class LinkEx extends ObsidianUtilsBase {
 
   // TODO:
   exists(link: string, source: string): boolean {
-    let path = getLinkpath(link);
-    let file = this.app.metadataCache.getFirstLinkpathDest(path, source);
+    const path = getLinkpath(link);
+    const file = this.app.metadataCache.getFirstLinkpathDest(path, source);
     return file instanceof TFile;
   }
 

@@ -21,7 +21,7 @@ export class NextRepScheduler extends ModalBase {
 
   onOpen() {
     this.subscribeToEvents();
-    let { contentEl } = this;
+    const { contentEl } = this;
 
     contentEl.createEl("h2", { text: "Set Next Repetition Data" });
 
@@ -70,11 +70,11 @@ export class NextRepScheduler extends ModalBase {
   subscribeToEvents() {
     this.contentEl.addEventListener("keydown", async (ev) => {
       if (ev.key === "PageUp") {
-        let curValue = this.priorityComponent.getValue();
+        const curValue = this.priorityComponent.getValue();
         if (curValue < 95) this.priorityComponent.setValue(curValue + 5);
         else this.priorityComponent.setValue(100);
       } else if (ev.key === "PageDown") {
-        let curValue = this.priorityComponent.getValue();
+        const curValue = this.priorityComponent.getValue();
         if (curValue > 5) this.priorityComponent.setValue(curValue - 5);
         else this.priorityComponent.setValue(0);
       } else if (ev.key === "Enter") {

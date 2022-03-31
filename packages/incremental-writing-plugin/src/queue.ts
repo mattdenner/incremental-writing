@@ -15,7 +15,7 @@ export class Queue {
   }
 
   async createTableIfNotExists() {
-    let data = new MarkdownTable(this.plugin).toString();
+    const data = new MarkdownTable(this.plugin).toString();
     await this.plugin.files.createIfNotExists(this.queuePath, data);
   }
 
@@ -25,14 +25,14 @@ export class Queue {
   }
 
   async dismissCurrent() {
-    let table = await this.loadTable();
+    const table = await this.loadTable();
     if (!table || !table.hasReps()) {
       LogTo.Debug("No repetitions!", true);
       if (table.removeDeleted) await this.writeQueueTable(table);
       return;
     }
 
-    let curRep = table.currentRep();
+    const curRep = table.currentRep();
     if (!curRep.isDue()) {
       LogTo.Debug("No due repetition to dismiss.", true);
       if (table.removeDeleted) await this.writeQueueTable(table);
@@ -46,14 +46,14 @@ export class Queue {
   }
 
   async loadTable(): Promise<MarkdownTable> {
-    let text: string = await this.readQueue();
+    const text: string = await this.readQueue();
     if (!text) {
       LogTo.Debug("Failed to load queue table.");
       return;
     }
 
-    let fm = this.getFrontmatterString(text);
-    let table = new MarkdownTable(this.plugin, fm, text);
+    const fm = this.getFrontmatterString(text);
+    const table = new MarkdownTable(this.plugin, fm, text);
     table.removeDeleted();
     table.sortReps();
     return table;
@@ -64,14 +64,14 @@ export class Queue {
   }
 
   async goToCurrentRep() {
-    let table = await this.loadTable();
+    const table = await this.loadTable();
     if (!table || !table.hasReps()) {
       if (table.removeDeleted) await this.writeQueueTable(table);
       LogTo.Console("No more repetitions!", true);
       return;
     }
 
-    let currentRep = table.currentRep();
+    const currentRep = table.currentRep();
     if (currentRep.isDue()) {
       await this.loadRep(currentRep);
     } else {
@@ -172,10 +172,10 @@ export class Queue {
   }
 
   async writeQueueTable(table: MarkdownTable): Promise<void> {
-    let queue = this.getQueueAsTFile();
+    const queue = this.getQueueAsTFile();
     if (queue) {
       table.removeDeleted();
-      let data = table.toString();
+      const data = table.toString();
       table.sortReps();
       await this.plugin.app.vault.modify(queue, data);
     } else {
@@ -184,7 +184,7 @@ export class Queue {
   }
 
   async readQueue(): Promise<string> {
-    let queue = this.getQueueAsTFile();
+    const queue = this.getQueueAsTFile();
     try {
       return await this.plugin.app.vault.read(queue);
     } catch (Exception) {

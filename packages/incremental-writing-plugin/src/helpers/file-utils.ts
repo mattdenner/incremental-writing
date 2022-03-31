@@ -15,20 +15,20 @@ export class FileUtils extends ObsidianUtilsBase {
   async createIfNotExists(file: string, data: string) {
     const normalizedPath = normalizePath(file);
     if (!(await this.exists(normalizedPath))) {
-      let folderPath = this.getParentOfNormalized(normalizedPath);
+      const folderPath = this.getParentOfNormalized(normalizedPath);
       await this.createFolders(folderPath);
       await this.app.vault.create(normalizedPath, data);
     }
   }
 
   getTFile(filePath: string) {
-    let file = this.app.vault.getAbstractFileByPath(filePath);
+    const file = this.app.vault.getAbstractFileByPath(filePath);
     if (file instanceof TFile) return file;
     return null;
   }
 
   getTFolder(folderPath: string) {
-    let folder = this.app.vault.getAbstractFileByPath(folderPath);
+    const folder = this.app.vault.getAbstractFileByPath(folderPath);
     if (folder instanceof TFolder) return folder;
     return null;
   }
@@ -38,7 +38,7 @@ export class FileUtils extends ObsidianUtilsBase {
   }
 
   getParentOfNormalized(normalizedPath: string) {
-    let pathSplit = normalizedPath.split("/");
+    const pathSplit = normalizedPath.split("/");
     return pathSplit.slice(0, pathSplit.length - 1).join("/");
   }
 
@@ -62,8 +62,8 @@ export class FileUtils extends ObsidianUtilsBase {
   }
 
   async goTo(filePath: string, newLeaf: boolean) {
-    let file = this.getTFile(filePath);
-    let link = this.app.metadataCache.fileToLinktext(file, "");
+    const file = this.getTFile(filePath);
+    const link = this.app.metadataCache.fileToLinktext(file, "");
     await this.app.workspace.openLinkText(link, "", newLeaf);
   }
 

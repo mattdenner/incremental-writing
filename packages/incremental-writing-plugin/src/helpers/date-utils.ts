@@ -8,16 +8,16 @@ declare global {
 }
 
 Date.prototype.addDays = function (days: number): Date {
-  var result = new Date(this);
+  const result = new Date(this);
   result.setDate(result.getDate() + days);
   return result;
 };
 
 Date.prototype.formatYYMMDD = function (): string {
   const d = new Date(this);
-  var month = "" + (d.getMonth() + 1);
-  var day = "" + d.getDate();
-  var year = d.getFullYear();
+  let month = "" + (d.getMonth() + 1);
+  let day = "" + d.getDate();
+  const year = d.getFullYear();
 
   if (month.length < 2) month = "0" + month;
   if (day.length < 2) day = "0" + day;
@@ -33,7 +33,7 @@ Date.prototype.isValid = function () {
 Date.prototype.daysDifference = function (from: Date): number {
   const date = new Date(this);
   const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
-  // @ts-ignore
+  // @ts-ignore: there's something odd about the `date-from` behaviour
   return Math.round(Math.abs((date - from) / oneDay));
 };
 

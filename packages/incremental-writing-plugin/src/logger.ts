@@ -5,12 +5,12 @@ export class LogTo {
     return new Date().toTimeString().substr(0, 8);
   }
 
-  static Debug(message: string, notify: boolean = false) {
+  static Debug(message: string, notify = false) {
     console.debug(`[${LogTo.getTime()}] (IW Plugin): ${message}`);
     if (notify) new Notice(message);
   }
 
-  static Console(message: string, notify: boolean = false) {
+  static Console(message: string, notify = false) {
     console.log(`[${LogTo.getTime()}] (IW Plugin): ${message}`);
     if (notify) new Notice(message);
   }

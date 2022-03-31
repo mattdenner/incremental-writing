@@ -23,7 +23,7 @@ export class CreateQueueModal extends ModalBase {
   }
 
   onOpen() {
-    let { contentEl } = this;
+    const { contentEl } = this;
 
     contentEl.createEl("h2", { text: "Create and Load a New Queue" });
 

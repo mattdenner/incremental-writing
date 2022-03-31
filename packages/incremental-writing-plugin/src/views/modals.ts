@@ -32,7 +32,7 @@ abstract class ReviewModal extends ModalBase {
   }
 
   onOpen() {
-    let { contentEl } = this;
+    const { contentEl } = this;
 
     this.titleNode = contentEl.createEl("h2", { text: this.title });
 
@@ -46,7 +46,7 @@ abstract class ReviewModal extends ModalBase {
         this.plugin.queue.queuePath
       )
     );
-    let folderFunc = () =>
+    const folderFunc = () =>
       this.plugin.app.vault.getAbstractFileByPath(
         this.plugin.settings.queueFolderPath
       ) as TFolder;
@@ -70,8 +70,8 @@ abstract class ReviewModal extends ModalBase {
     //
     // Priority
 
-    let pMin = this.plugin.settings.defaultPriorityMin;
-    let pMax = this.plugin.settings.defaultPriorityMax;
+    const pMin = this.plugin.settings.defaultPriorityMin;
+    const pMax = this.plugin.settings.defaultPriorityMax;
     contentEl.appendText("Priority: ");
     this.inputSlider = new SliderComponent(contentEl)
       .setLimits(0, 100, 1)
@@ -103,11 +103,11 @@ abstract class ReviewModal extends ModalBase {
   subscribeToEvents() {
     this.contentEl.addEventListener("keydown", async (ev) => {
       if (ev.key === "PageUp") {
-        let curValue = this.inputSlider.getValue();
+        const curValue = this.inputSlider.getValue();
         if (curValue < 95) this.inputSlider.setValue(curValue + 5);
         else this.inputSlider.setValue(100);
       } else if (ev.key === "PageDown") {
-        let curValue = this.inputSlider.getValue();
+        const curValue = this.inputSlider.getValue();
         if (curValue > 5) this.inputSlider.setValue(curValue - 5);
         else this.inputSlider.setValue(0);
       } else if (ev.key === "Enter") {
@@ -220,7 +220,7 @@ export class ReviewBlockModal extends ReviewModal {
 
   onOpen() {
     super.onOpen();
-    let { contentEl } = this;
+    const { contentEl } = this;
     this.customBlockRefInput = new TextComponent(contentEl);
     const br = contentEl.createEl("br");
     this.titleNode.after(
