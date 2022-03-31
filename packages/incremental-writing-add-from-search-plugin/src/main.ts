@@ -1,6 +1,5 @@
-import { Plugin, ButtonComponent, TFile, normalizePath } from "obsidian";
+import { Plugin, ButtonComponent, TFile, normalizePath, parseLinktext } from "obsidian";
 import { LogTo } from "./logger";
-import { LinkEx } from "./helpers/link-utils";
 
 export default class IW extends Plugin {
   async onload() {
@@ -41,10 +40,22 @@ export default class IW extends Plugin {
       LogTo.Console("Failed to get search leaf view.");
       return
     }
+    
+    const createAbsoluteLink = (linktext: string): string | null => {
+      const { path, subpath } = parseLinktext(normalizePath(linktext));
+      const file = this.app.metadataCache.getFirstLinkpathDest(path, "");
+      // has to be set to lower case
+      // because obsidian link cache
+      // record keys are lower case
+      return file !== null
+        ? this.app.metadataCache.fileToLinktext(file, "", true) +
+            (subpath.toLowerCase() ?? "")
+        : null;
+    };
 
     // @ts-ignore: the `dom` attribute of the view is "secret"
     const files = Array.from(view.dom.resultDomLookup.keys()) as TFile[];
-    const links = files.map((file) => new LinkEx(this.app).createAbsoluteLink(normalizePath(file.path), ""));
+    const links = files.map((file) => createAbsoluteLink(normalizePath(file.path)));
     if (!links || links.length === 0) {
       LogTo.Console("No files to add.", true);
       return;
