@@ -1,0 +1,30 @@
+{
+  "root": "packages/incremental-writing-plugin-e2e",
+  "sourceRoot": "packages/incremental-writing-plugin-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "options": {
+        "cypressConfig": "packages/incremental-writing-plugin-e2e/cypress.json",
+        "devServerTarget": "incremental-writing-plugin:serve"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "incremental-writing-plugin:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/incremental-writing-plugin-e2e/**/*.{js,ts}"
+        ]
+      }
+    }
+  },
+  "tags": [],
+  "implicitDependencies": ["incremental-writing-plugin"]
+}
