@@ -1,5 +1,6 @@
 import YAML from 'yaml';
-import { GrayMatterFile } from "gray-matter";
+import { GrayMatterFile } from "gray-matter"; // ... import
+export { GrayMatterFile } from "gray-matter"; // ... re-export
 
 export default function matter(input: string): GrayMatterFile<string> {
   const file = {
